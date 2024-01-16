@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/mysql/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model task {
+  id          Int         @id @default(autoincrement())
+  user_id     Int
+  title       String      @db.VarChar(255)
+  description String?     @db.Text
+  status      task_status
+  user        user        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "task_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(255)
+  task     task[]
+}
+
+enum task_status {
+  pending
+  in_progress
+  completed
+}
