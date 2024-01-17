@@ -8,6 +8,7 @@ import { LogsService } from 'src/logs/logs.service';
 @Injectable()
 export class TasksService {
   constructor(private prisma: PrismaMysqlService, private logService: LogsService) {}
+  //modificar prisma.create
   async create(data: CreateTaskDto): Promise<TaskModel> {
     const task = await this.prisma.task.create({
       data
@@ -24,11 +25,11 @@ export class TasksService {
     return task
   }
 
-  findAll() {
+  findAll(): Promise<TaskModel[]> {
     return this.prisma.task.findMany()
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<TaskModel> {
     return this.prisma.task.findFirstOrThrow({
       where:{
         id
@@ -36,7 +37,7 @@ export class TasksService {
     })
   }
 
-  update(id: number, data: UpdateTaskDto) {
+  update(id: number, data: UpdateTaskDto): Promise<TaskModel> {
     return this.prisma.task.update({
       where:{
         id
@@ -45,7 +46,7 @@ export class TasksService {
     });
   }
 
-  remove(id: number) {
+  remove(id: number): Promise<TaskModel> {
     return this.prisma.task.delete({
       where:{
         id
