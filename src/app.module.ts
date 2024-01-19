@@ -1,30 +1,14 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
-import { LoggerMiddleware } from './middlewares/logger.middleware';
-import { PrismaModule } from './database/prisma.module';
-import { LogsModule } from './logs/logs.module';
-import { TasksController } from './tasks/tasks.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [TasksModule, LogsModule, UsersModule, AuthModule],
+  imports: [TasksModule, UsersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
 
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .exclude(
-        {path:'tasks', method: RequestMethod.GET}, 
-        {path:'tasks/:id', method: RequestMethod.GET},
-        {path:'tasks/:id', method: RequestMethod.POST}, 
-        {path:'tasks', method: RequestMethod.POST} 
-      )
-      .forRoutes(TasksController);
-  }
-}
+export class AppModule {}

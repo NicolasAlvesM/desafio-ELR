@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    volumes:
+      - mysql_teste_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=714842
+      - MYSQL_DATABASE=challenge
+      - MYSQL_USER=nic
+      - MYSQL_PASSWORD=714842
+    ports:
+      - "3306:3306"
+
+  mongo1:
+    image: mongo:latest
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    ports:
+      - "27017:27017"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      retries: 30
+    volumes:
+      - "mongo1_teste_data:/data/db"
+      - "mongo1_teste_config:/data/configdb"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c "npm run mysql:migrate:deploy && npm run prisma:generate:db_clients && npm run start:prod"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - db
+      - mongo1
+volumes:
+  mysql_teste_data:
+  mongo1_teste_data:
+  mongo1_teste_config:

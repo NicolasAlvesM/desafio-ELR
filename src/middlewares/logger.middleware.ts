@@ -8,15 +8,20 @@ const metodos = {
     DELETE: "Deletar tarefa"
 }
 
+interface ReqUser extends Request{
+  user: {
+    sub: number
+  }
+}
+
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(private logService: LogsService) {}
-  async use(req: Request, res: Response, next: NextFunction) {
+  async use(req: ReqUser, res: Response, next: NextFunction) {
 
       //modificar
       console.log("Chamou midd")
-      const { user_id } = req.body
-      const data = {data:{action: metodos[req.method], user: user_id,taskId: Number(req.params.id)}} 
+      const data = {data:{action: metodos[req.method], user: req.user.sub,taskId: Number(req.params.id)}} 
       
       res.on('finish', () => {
         if (res.statusCode >= 200 && res.statusCode < 300) {

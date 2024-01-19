@@ -25,7 +25,8 @@
     "prisma:mongo:dbpush": "npx prisma db push --schema prisma/mongo/schema.prisma",
     "prisma:generate:mysql_client": "prisma generate --schema prisma/mysql/schema.prisma",
     "prisma:generate:mongo_client": "prisma generate --schema prisma/mongodb/schema.prisma",
-    "prisma:generate:db_clients": "prisma generate --schema prisma/mysql/schema.prisma && prisma generate --schema prisma/mongodb/schema.prisma"
+    "prisma:generate:db_clients": "prisma generate --schema prisma/mysql/schema.prisma && prisma generate --schema prisma/mongodb/schema.prisma",
+    "deploy": "npx prisma migrate deploy --schema prisma/mysql/schema.prisma --preview-feature && prisma generate --schema prisma/mysql/schema.prisma && prisma generate --schema prisma/mongodb/schema.prisma && node dist/main"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

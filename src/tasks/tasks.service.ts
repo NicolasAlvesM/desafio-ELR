@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaMysqlService } from '../database/prisma.mysql.service'
-import { task as TaskModel } from '@prisma/client'
+import { task as TaskModel } from '@prisma/mysql/client'
 import { LogsService } from 'src/logs/logs.service';
 
 @Injectable()
 export class TasksService {
   constructor(private prisma: PrismaMysqlService, private logService: LogsService) {}
   //modificar prisma.create
+  //modificar a parte de REQ de todas functions
   async create(data: CreateTaskDto): Promise<TaskModel> {
     const task = await this.prisma.task.create({
       data
@@ -25,8 +26,13 @@ export class TasksService {
     return task
   }
 
-  findAll(): Promise<TaskModel[]> {
-    return this.prisma.task.findMany()
+  //modificar esse req
+  findAll(req): Promise<TaskModel[]> {
+    return this.prisma.task.findMany({
+      where:{
+        user_id: req.user.sub
+      }
+    })
   }
 
   findOne(id: number): Promise<TaskModel> {
@@ -36,7 +42,7 @@ export class TasksService {
       }
     })
   }
-
+  //deveria checar user
   update(id: number, data: UpdateTaskDto): Promise<TaskModel> {
     return this.prisma.task.update({
       where:{
@@ -46,6 +52,7 @@ export class TasksService {
     });
   }
 
+  //deveria checar user
   remove(id: number): Promise<TaskModel> {
     return this.prisma.task.delete({
       where:{
