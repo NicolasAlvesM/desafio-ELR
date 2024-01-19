@@ -4,7 +4,7 @@ CREATE TABLE `task` (
     `user_id` INTEGER NOT NULL,
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
-    `status` ENUM('pending', 'in_progress', 'completed') NOT NULL,
+    `status` ENUM('pending', 'in_progress', 'completed') NOT NULL DEFAULT('pending'),
 
     INDEX `user_id`(`user_id`),
     PRIMARY KEY (`id`)
