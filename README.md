@@ -1,5 +1,5 @@
 # desafio-ELR
-Ainda falta configurar o docker e algumas coisas no código devem ser refatoradas.
+Necessario refatorar algumas coisinhas
 
 ## Installation
 
@@ -17,6 +17,6 @@ $ npm run start
 $ npm run start:dev
 
 # production mode
-$ npm run start:prod
+$ docker-compose up
 ```
 Está configurado na porta 3000
