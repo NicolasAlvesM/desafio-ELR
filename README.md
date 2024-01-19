@@ -1,5 +1,5 @@
 # desafio-ELR
-Ainda falta configurar o docker e algumas coisas no código devem ser refatorados mas está funcionando.
+Ainda falta configurar o docker e algumas coisas no código devem ser refatoradas.
 
 ## Installation
 
