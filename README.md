@@ -1,5 +1,5 @@
 # desafio-ELR
-Está incompleto
+Ainda falta configurar o docker e algumas coisas no código devem ser refatorados mas está funcionando.
 
 ## Installation
 
@@ -20,6 +20,3 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 Está configurado na porta 3000
-
-
-Ainda estou mudando o Dockerfile e docker-compose.yml para rodar com docker.
