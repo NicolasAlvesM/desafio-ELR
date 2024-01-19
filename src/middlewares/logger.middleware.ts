@@ -20,7 +20,6 @@ export class LoggerMiddleware implements NestMiddleware {
   async use(req: ReqUser, res: Response, next: NextFunction) {
 
       //modificar
-      console.log("Chamou midd")
       const data = {data:{action: metodos[req.method], user: req.user.sub,taskId: Number(req.params.id)}} 
       
       res.on('finish', () => {

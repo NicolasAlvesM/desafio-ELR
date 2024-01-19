@@ -7,10 +7,10 @@ services:
     volumes:
       - mysql_teste_data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=714842
+      - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=challenge
       - MYSQL_USER=nic
-      - MYSQL_PASSWORD=714842
+      - MYSQL_PASSWORD=123456
     ports:
       - "3306:3306"
 
@@ -19,6 +19,9 @@ services:
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:

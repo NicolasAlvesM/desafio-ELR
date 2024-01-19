@@ -14,7 +14,6 @@ import { Reflector } from '@nestjs/core';
     constructor(private jwtService: JwtService, private reflector: Reflector) {}
   
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      console.log("chamou auth")
       const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
         context.getHandler(),
         context.getClass(),
